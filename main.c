@@ -10,12 +10,12 @@
 void *mlx;
 void *win1;
 
-int   draw_line(double x1, double  y1, double x2, double  y2, int color)
+float   draw_line(float x1, float  y1, float x2, float  y2, int color)
 {
-  double lenghtx = (x2 - x1);
-  double lenghty = (y2 - y1);
-  int dx = (lenghtx > 0 ? 1 : -1);
-  int dy = (lenghty > 0 ? 1 : -1);
+  float lenghtx = (x2 - x1);
+  float lenghty = (y2 - y1);
+  float dx = (lenghtx > 0 ? 1 : -1);
+  float dy = (lenghty > 0 ? 1 : -1);
   float x = x1;
   float y = y1;
   float k = lenghty / lenghtx;
@@ -37,7 +37,7 @@ int   draw_line(double x1, double  y1, double x2, double  y2, int color)
       
       while(lenghtx--)
       {
-        mlx_pixel_put(mlx, win1,x, y, color);      
+        mlx_pixel_put(mlx, win1, x, y, color);      
         x = x + dx;
         y = x * k + b;
       }
@@ -50,17 +50,17 @@ int   draw_line(double x1, double  y1, double x2, double  y2, int color)
 k rotation_z(float x, float y, float z)
 {
   k a;
-  a.x = x * cos(0.5) - y * sin(0.5);
-  a.y = x * sin(0.5) + y * cos(0.5);
+  a.x = x * cos(0.523599) - y * sin(0.523599);
+  a.y = x * sin(0.523599) + y * cos(0.523599);
   a.z = z;
   return (a);
 }
 k rotation_y(float x, float y, float z)
 {
   k a;
-  a.x = x * cos(0) + z * sin(0);
+  a.x = x * cos(0.523599) + z * sin(0.523599);
   a.y = y;
-  a.z = -x * sin(0) + z * cos(0);
+  a.z = -x * sin(0.523599) + z * cos(0.523599);
   return (a);
 }
 
@@ -95,7 +95,7 @@ int clear_and_close(int but,void *param)
 
 }
 
-s line(float x1, float y1, float x2, float y2, float z)
+s proektcia(float x1, float y1, float x2, float y2, float z)
 {
   s a;
   a.x = (-z / (z - 40) * (x2 - x1) + x2);
@@ -103,10 +103,14 @@ s line(float x1, float y1, float x2, float y2, float z)
   return (a);
 }
 
-int   mouse(int button, int z, int x , int y)
+int   mouse(int button, int x, int y, int x1, int y1)
 {
+   // s c;
+    //c = new_sistem(x, y);
     if (button == 1)
-        mlx_string_put(mlx, win1, 500, 500, 0xfffafa, "P I Z D A");
+        mlx_string_put(mlx, win1, x, y, 0xfffafa, "P I Z D A");
+    if (button == 3)
+        draw_line(x,y,x1,y1,0xfffafa);  
     return (0);
 }
 
@@ -120,6 +124,8 @@ int main()
     k a5;
     k a6;
     k a7;
+    k atest;
+    k atest1;
     s b0,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24;
     s b1;
     s b2;
@@ -128,9 +134,15 @@ int main()
     s b5;
     s b6;
     s b7;
+    s btest;
+    s btest1;
     k l0, l1, l2, l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23,l24;
     mlx = mlx_init();
     win1 = mlx_new_window(mlx, 1000, 1000, "win1");
+    atest.x = -400; atest.y = 400; atest.z = 0;
+    atest1.x = -300; atest1.y = 300; atest1.z = 0;
+    l0 = rotation_z(atest.x, atest.y, atest.z);
+    l1 = rotation_z(atest1.x, atest1.y, atest1.z);
     a0.x = -100; a0.y = -100; a0.z = 0;
     a1.x = -50; a1.y = -100; a1.z = 0;
     a2.x = 0; a2.y = -100; a2.z = 20;
@@ -156,7 +168,7 @@ int main()
     a22.x = 0; a22.y = 100; a22.z = 20;
     a23.x = 50; a23.y = 100; a23.z = 0;
     a24.x = 100; a24.y = 100; a24.z = 0;
-    /*a0 = rotation_z(a0.x, a0.y, a0.z);
+    a0 = rotation_z(a0.x, a0.y, a0.z);
     a1 = rotation_z(a1.x, a1.y, a1.z);
     a2 = rotation_z(a2.x, a2.y, a2.z);
     a3 = rotation_z(a3.x, a3.y, a3.z);
@@ -181,39 +193,37 @@ int main()
     a22 = rotation_z(a22.x, a22.y, a22.z);
     a23 = rotation_z(a23.x, a23.y, a23.z);
     a24 = rotation_z(a24.x, a24.y, a24.z);
-    printf("%f\n%f\n%f\n", a10.x, a10.y, a10.z);*/
 
-
-
-
-    b0 = line(-30, -30, a0.x, a0.y, a0.z);
-    b1 = line(-30, -30, a1.x, a1.y, a1.z);
-    b2 = line(-30, -30, a2.x, a2.y, a2.z);
-    b3 = line(-30, -30, a3.x, a3.y, a3.z);
-    b4 = line(-30, -30, a4.x, a4.y, a4.z);
-    b5 = line(-30, -30, a5.x, a5.y, a5.z);
-    b6 = line(-30, -30, a6.x, a6.y, a6.z);
-    b7 = line(-30, -30, a7.x, a7.y, a7.z);
-    b8 = line(-30, -30, a8.x, a8.y, a8.z);
-    b9 = line(-30, -30, a9.x, a9.y, a9.z);
-    b10 = line(-30, -30, a10.x, a10.y, a10.z);
-    b11 = line(-30, -30, a11.x, a11.y, a11.z);
-    b12 = line(-30, -30, a12.x, a12.y, a12.z);
-    b13 = line(-30, -30, a13.x, a13.y, a13.z);
-    b14 = line(-30, -30, a14.x, a14.y, a14.z);
-    b15 = line(-30, -30, a15.x, a15.y, a15.z);
-    b16 = line(-30, -30, a16.x, a16.y, a16.z);
-    b17 = line(-30, -30, a17.x, a17.y, a17.z);
-    b18 = line(-30, -30, a18.x, a18.y, a18.z);
-    b19 = line(-30, -30, a19.x, a19.y, a19.z);
-    b20 = line(-30, -30, a20.x, a20.y, a20.z);
-    b21 = line(-30, -30, a21.x, a21.y, a21.z);
-    b22 = line(-30, -30, a22.x, a22.y, a22.z);
-    b23 = line(-30, -30, a23.x, a23.y, a23.z);
-    b24 = line(-30, -30, a24.x, a24.y, a24.z);
+    btest = proektcia(0, 0, l0.x, l0.y, l0.z);
+    btest1 = proektcia(0, 0, l1.x, l1.y, l1.z);
+    b0 = proektcia(0, 0, a0.x, a0.y, a0.z);
+    b1 = proektcia(0, 0, a1.x, a1.y, a1.z);
+    b2 = proektcia(0, 0, a2.x, a2.y, a2.z);
+    b3 = proektcia(0, 0, a3.x, a3.y, a3.z);
+    b4 = proektcia(0, 0, a4.x, a4.y, a4.z);
+    b5 = proektcia(0, 0, a5.x, a5.y, a5.z);
+    b6 = proektcia(0, 0, a6.x, a6.y, a6.z);
+    b7 = proektcia(0, 0, a7.x, a7.y, a7.z);
+    b8 = proektcia(0, 0, a8.x, a8.y, a8.z);
+    b9 = proektcia(0, 0, a9.x, a9.y, a9.z);
+    b10 = proektcia(0, 0, a10.x, a10.y, a10.z);
+    b11 = proektcia(0, 0, a11.x, a11.y, a11.z);
+    b12 = proektcia(0, 0, a12.x, a12.y, a12.z);
+    b13 = proektcia(0, 0, a13.x, a13.y, a13.z);
+    b14 = proektcia(0, 0, a14.x, a14.y, a14.z);
+    b15 = proektcia(0, 0, a15.x, a15.y, a15.z);
+    b16 = proektcia(0, 0, a16.x, a16.y, a16.z);
+    b17 = proektcia(0, 0, a17.x, a17.y, a17.z);
+    b18 = proektcia(0, 0, a18.x, a18.y, a18.z);
+    b19 = proektcia(0, 0, a19.x, a19.y, a19.z);
+    b20 = proektcia(0, 0, a20.x, a20.y, a20.z);
+    b21 = proektcia(0, 0, a21.x, a21.y, a21.z);
+    b22 = proektcia(0, 0, a22.x, a22.y, a22.z);
+    b23 = proektcia(0, 0, a23.x, a23.y, a23.z);
+    b24 = proektcia(0, 0, a24.x, a24.y, a24.z);
     int x = 0, y = 0, lenx = 1000, leny = 1000;  
     
-    s c0, c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24;
+    s c0, c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24, ctest, ctest1;
     c0 = new_sistem(b0.x, b0.y);
     c1 = new_sistem(b1.x, b1.y);
     c2 = new_sistem(b2.x, b2.y);
@@ -239,6 +249,12 @@ int main()
     c22 = new_sistem(b22.x, b22.y);
     c23 = new_sistem(b23.x, b23.y);
     c24 = new_sistem(b24.x, b24.y);
+    ctest = new_sistem(btest.x, btest.y);
+    ctest1 = new_sistem(btest1.x, btest1.y);
+    printf("%d\n%d\n", (int)c17.x, (int)c17.y);
+    printf("%d\n%d\n", (int)c12.x, (int)c12.y);
+    //printf("%f\n%f\n", ctest.x, ctest.y);
+    //printf("%f\n%f\n", ctest1.x, ctest1.y);
    /* c0 = rotation_z(b0.x, b0.y);
     c1 = rotation_z(b1.x, b1.y);
     c2 = rotation_z(b2.x, b2.y);
@@ -264,48 +280,50 @@ int main()
     c22 = rotation_z(b22.x, b22.y);
     c23 = rotation_z(b23.x, b23.y);
     c24 = rotation_z(b24.x, b24.y);
-*/
-
-    draw_line(c0.x, c0.y, c1.x , c1.y, 0xff0000);
-    draw_line(c0.x, c0.y, c5.x , c5.y, 0xff0000);
-    draw_line(c1.x, c1.y, c2.x , c2.y, 0xff0000);
-    draw_line(c1.x, c1.y, c6.x , c6.y, 0xff0000);
-    draw_line(c2.x, c2.y, c3.x , c3.y, 0xff0000);
-    draw_line(c2.x, c2.y, c7.x , c7.y, 0xff0000);
-    draw_line(c3.x, c3.y, c4.x , c4.y, 0xff0000);
-    draw_line(c3.x, c3.y, c8.x , c8.y, 0xff0000);
-    draw_line(c4.x, c4.y, c9.x , c9.y, 0xff0000);
-    draw_line(c5.x, c5.y, c6.x , c6.y, 0xff0000);
-    draw_line(c5.x, c5.y, c10.x , c10.y, 0xff0000);
-    draw_line(c6.x, c6.y, c7.x , c7.y, 0xff0000);
-    draw_line(c6.x, c6.y, c11.x , c11.y, 0xff0000);
-    draw_line(c7.x, c7.y, c8.x , c8.y, 0xff0000);
-    draw_line(c7.x, c7.y, c12.x , c12.y, 0xff0000);
-    draw_line(c8.x, c8.y, c9.x , c9.y, 0xff0000);
-    draw_line(c8.x, c8.y, c13.x , c13.y, 0xff0000);
-    draw_line(c9.x, c9.y, c14.x , c14.y, 0xff0000);
-    draw_line(c10.x, c10.y, c11.x , c11.y, 0xff0000);
-    draw_line(c10.x, c10.y, c15.x , c15.y, 0xff0000);
-    draw_line(c11.x, c11.y, c12.x , c12.y, 0xff0000);
-    draw_line(c11.x, c11.y, c16.x , c16.y, 0xff0000);
-    draw_line(c12.x, c12.y, c13.x , c13.y, 0xff0000);
-    draw_line(c12.x, c12.y, c17.x , c17.y, 0xff0000);
-    draw_line(c13.x, c13.y, c14.x , c14.y, 0xff0000);
-    draw_line(c13.x, c13.y, c18.x , c18.y, 0xff0000);
-    draw_line(c14.x, c14.y, c19.x , c19.y, 0xff0000);
-    draw_line(c15.x, c15.y, c16.x , c16.y, 0xff0000);
-    draw_line(c15.x, c15.y, c20.x , c20.y, 0xff0000);
-    draw_line(c16.x, c16.y, c17.x , c17.y, 0xff0000);
-    draw_line(c16.x, c16.y, c21.x , c21.y, 0xff0000);
-    draw_line(c17.x, c17.y, c18.x , c18.y, 0xff0000);
-    draw_line(c17.x, c17.y, c22.x , c22.y, 0xff0000);
-    draw_line(c18.x, c18.y, c19.x , c19.y, 0xff0000);
-    draw_line(c18.x, c18.y, c23.x , c23.y, 0xff0000);
-    draw_line(c19.x, c19.y, c24.x , c24.y, 0xff0000);
-    draw_line(c20.x, c20.y, c21.x , c21.y, 0xff0000);
-    draw_line(c21.x, c21.y, c22.x , c22.y, 0xff0000);
-    draw_line(c22.x, c22.y, c23.x , c23.y, 0xff0000);
-    draw_line(c23.x, c23.y, c24.x , c24.y, 0xff0000);
+*/  
+   
+    //draw_line((int)ctest.x, (int)ctest.y, (int)ctest1.x , (int)ctest1.y, 0xff0000);
+    //draw_line(899, 900, 799 , 800, 0xff0000);
+    draw_line((int)c0.x, (int)c0.y, (int)c1.x , (int)c1.y, 0xff0000);
+    draw_line((int)c0.x,(int)c0.y,(int)c5.x , (int)c5.y, 0xff0000);
+    draw_line((int)c1.x,(int)c1.y,(int)c2.x , (int)c2.y, 0xff0000);
+    draw_line((int)c1.x,(int)c1.y,(int)c6.x , (int)c6.y, 0xff0000);
+    draw_line((int)c2.x,(int)c2.y,(int)c3.x , (int)c3.y, 0xff0000);
+    draw_line((int)c2.x,(int)c2.y,(int)c7.x , (int)c7.y, 0xff0000);
+    draw_line((int)c3.x,(int)c3.y,(int)c4.x , (int)c4.y, 0xff0000);
+    draw_line((int)c3.x,(int)c3.y,(int)c8.x , (int)c8.y, 0xff0000);
+    draw_line((int)c4.x,(int)c4.y,(int)c9.x , (int)c9.y, 0xff0000);
+    draw_line((int)c5.x,(int)c5.y,(int)c6.x , (int)c6.y, 0xff0000);
+    draw_line((int)c5.x,(int)c5.y,(int)c10.x , (int)c10.y, 0xff0000);
+    draw_line((int)c6.x,(int)c6.y,(int)c7.x , (int)c7.y, 0xff0000);
+    draw_line((int)c6.x,(int)c6.y,(int)c11.x , (int)c11.y, 0xff0000);
+    draw_line((int)c7.x,(int)c7.y,(int)c8.x , (int)c8.y, 0xff0000);
+    draw_line((int)c7.x,(int)c7.y,(int)c12.x , (int)c12.y, 0xff0000);
+    draw_line((int)c8.x,(int)c8.y,(int)c9.x , (int)c9.y, 0xff0000);
+    draw_line((int)c8.x,(int)c8.y,(int)c13.x , (int)c13.y, 0xff0000);
+    draw_line((int)c9.x,(int)c9.y,(int)c14.x , (int)c14.y, 0xff0000);
+    draw_line((int)c10.x,(int)c10.y,(int)c11.x , (int)c11.y, 0xff0000);
+    draw_line((int)c10.x,(int)c10.y,(int)c15.x , (int)c15.y, 0xff0000);
+    draw_line((int)c11.x,(int)c11.y,(int)c12.x , (int)c12.y, 0xff0000);
+    draw_line((int)c11.x,(int)c11.y,(int)c16.x , (int)c16.y, 0xff0000);
+    draw_line((int)c12.x,(int)c12.y,(int)c13.x , (int)c13.y, 0xff0000);
+    draw_line((int)c12.x,(int)c12.y,(int)c17.x ,(int)c17.y, 0xff0000);
+    draw_line((int)c13.x,(int)c13.y,(int)c14.x , (int)c14.y, 0xff0000);
+    draw_line((int)c13.x,(int)c13.y,(int)c18.x , (int)c18.y, 0xff0000);
+    draw_line((int)c14.x,(int)c14.y,(int)c19.x , (int)c19.y, 0xff0000);
+    draw_line((int)c15.x,(int)c15.y,(int)c16.x , (int)c16.y, 0xff0000);
+    draw_line((int)c15.x,(int)c15.y,(int)c20.x ,(int)c20.y, 0xff0000);
+    draw_line((int)c16.x,(int)c16.y,(int)c17.x ,(int)c17.y, 0xff0000);
+    draw_line((int)c16.x,(int)c16.y,(int)c21.x ,(int)c21.y, 0xff0000);
+    draw_line((int)c17.x,(int)c17.y,(int)c18.x ,(int)c18.y, 0xff0000);
+    draw_line((int)c17.x,(int)c17.y,(int)c22.x ,(int)c22.y, 0xff0000);
+    draw_line((int)c18.x,(int)c18.y,(int)c19.x ,(int)c19.y, 0xff0000);
+    draw_line((int)c18.x,(int)c18.y,(int)c23.x ,(int)c23.y, 0xff0000);
+    draw_line((int)c19.x,(int)c19.y,(int)c24.x ,(int)c24.y, 0xff0000);
+    draw_line((int)c20.x,(int)c20.y,(int)c21.x ,(int)c21.y, 0xff0000);
+    draw_line((int)c21.x,(int)c21.y,(int)c22.x ,(int)c22.y, 0xff0000);
+    draw_line((int)c22.x,(int)c22.y,(int)c23.x ,(int)c23.y, 0xff0000);
+    draw_line((int)c23.x,(int)c23.y,(int)c24.x ,(int)c24.y, 0xff0000);
     mlx_key_hook(win1, clear_and_close, 0);
     mlx_mouse_hook(win1, mouse, 0);
     //mlx_mouse_hook(win1, mouse, 0);
