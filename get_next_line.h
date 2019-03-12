@@ -6,7 +6,7 @@
 /*   By: hkuhic <hkuhic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 19:52:08 by hkuhic            #+#    #+#             */
-/*   Updated: 2019/03/11 21:03:36 by hkuhic           ###   ########.fr       */
+/*   Updated: 2019/03/12 19:32:31 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft.h"
-
-typedef struct	t_matrix
-{
-	float x;
-	float y;
-}				s;
-typedef struct	t_screen
-{
-	float x;
-	float y;
-}				screen;
-
-typedef	struct t_coor
-{
-	float x;
-	float y;
-	float z;
-}				k;
-
-k rotation_y(float x, float y, float z);
-k rotation_z(float x, float y, float z);
-
 
 int		get_next_line(const int fd, char **line);
 

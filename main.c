@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/12 19:33:31 by elchrist          #+#    #+#             */
+/*   Updated: 2019/03/12 19:33:36 by elchrist         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "mlx.h"
 #include <stdio.h>
@@ -34,10 +45,10 @@ float   draw_line(float x1, float  y1, float x2, float  y2, int color)
   }
   else
   {
-      
+
       while(lenghtx--)
       {
-        mlx_pixel_put(mlx, win1, x, y, color);      
+        mlx_pixel_put(mlx, win1, x, y, color);
         x = x + dx;
         y = x * k + b;
       }
@@ -110,12 +121,12 @@ int   mouse(int button, int x, int y, int x1, int y1)
     if (button == 1)
         mlx_string_put(mlx, win1, x, y, 0xfffafa, "P I Z D A");
     if (button == 3)
-        draw_line(x,y,x1,y1,0xfffafa);  
+        draw_line(x,y,x1,y1,0xfffafa);
     return (0);
 }
 
 int main()
-{ 
+{
     k a0, a8, a9, a10, a11, a12, a13,a14,a15,a16,a17,a18,a19,a20,a21,a22,a23,a24;
     k a1;
     k a2;
@@ -221,8 +232,8 @@ int main()
     b22 = proektcia(0, 0, a22.x, a22.y, a22.z);
     b23 = proektcia(0, 0, a23.x, a23.y, a23.z);
     b24 = proektcia(0, 0, a24.x, a24.y, a24.z);
-    int x = 0, y = 0, lenx = 1000, leny = 1000;  
-    
+    int x = 0, y = 0, lenx = 1000, leny = 1000;
+
     s c0, c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24, ctest, ctest1;
     c0 = new_sistem(b0.x, b0.y);
     c1 = new_sistem(b1.x, b1.y);
@@ -280,8 +291,8 @@ int main()
     c22 = rotation_z(b22.x, b22.y);
     c23 = rotation_z(b23.x, b23.y);
     c24 = rotation_z(b24.x, b24.y);
-*/  
-   
+*/
+
     //draw_line((int)ctest.x, (int)ctest.y, (int)ctest1.x , (int)ctest1.y, 0xff0000);
     //draw_line(899, 900, 799 , 800, 0xff0000);
     draw_line((int)c0.x, (int)c0.y, (int)c1.x , (int)c1.y, 0xff0000);
