@@ -32,12 +32,6 @@ typedef struct	s_matrix
 	float y;
 }				t_matrix;
 
-typedef struct	s_screen
-{
-	float x;
-	float y;
-}				t_screen;
-
 typedef	struct s_coord
 {
 	float x;
