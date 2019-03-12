@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:58:20 by elchrist          #+#    #+#             */
-/*   Updated: 2019/03/12 19:32:53 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/03/12 23:12:51 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ typedef	struct s_coord
 	float z;
 }				t_coord;
 
-typedef struct	s_hueta
-{
-    int point_x;
-    int point_y;
-	t_point	**point;
-	void	*window;
-	char	*file;
-}				t_hueta;
+// typedef struct	s_hueta
+// {
+//     int point_x;
+//     int point_y;
+// 	t_point	**point;
+// 	void	*window;
+// 	char	*file;
+// }				t_hueta;
 
 k rotation_y(float x, float y, float z);
 k rotation_z(float x, float y, float z);
