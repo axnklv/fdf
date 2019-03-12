@@ -6,16 +6,21 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:58:20 by elchrist          #+#    #+#             */
-/*   Updated: 2019/03/12 23:14:44 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/03/12 23:16:12 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include <libft.h>
+# include "libft.h"
+# include "get_next_line.h"
 # include <math.h>
 # include <mlx.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
 
 void	it_is_error(void);
 void	invalid_map(void);
@@ -55,7 +60,8 @@ typedef struct s_piz
 // 	char	*file;
 // }				t_hueta;
 
-k rotation_y(float x, float y, float z);
-k rotation_z(float x, float y, float z);
+t_coord rotation_x(float x, float y, float z, float angle);
+t_coord rotation_y(float x, float y, float z, float angle);
+t_coord rotation_z(float x, float y, float z, float angle);
 
 #endif
