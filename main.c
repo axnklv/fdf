@@ -6,7 +6,7 @@
 /*   By: hkuhic <hkuhic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 19:33:31 by elchrist          #+#    #+#             */
-/*   Updated: 2019/03/13 17:00:41 by hkuhic           ###   ########.fr       */
+/*   Updated: 2019/03/13 19:26:35 by hkuhic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ float   draw_line(float x1, float  y1, float x2, float  y2, int color)
     float d = -lenghtx;
     while (len--)
     {
-      mlx_pixel_put(mlx, win1, x, y, 0x8deeee);
+      mlx_pixel_put(mlx, win1, x, y, color);
       x += dx;
       d += 2 * lenghty;
       if (d > 0)
@@ -52,7 +52,7 @@ float   draw_line(float x1, float  y1, float x2, float  y2, int color)
     float d = -lenghty;
     while (len--)
     {
-      mlx_pixel_put(mlx, win1, x, y, 0x8deeee);
+      mlx_pixel_put(mlx, win1, x, y, color);
       y += dy;
       d += 2 * lenghtx;
       if (d > 0)
@@ -115,19 +115,57 @@ t_matrix proektcia(float x1, float y1, float x2, float y2, float z)
   return (a);
 }
 
+void redraw(t_piz *a)
+{
+  t_matrix b0, b1,b2,b3,b4,b5,b6,b7, c0, c1,c2,c3,c4,c5,c6,c7;
+
+      b0 = proektcia(0, 0, a->x0, a->y0, a->z0);
+      b1 = proektcia(0, 0, a->x1, a->y1, a->z1);
+      b2 = proektcia(0, 0, a->x2, a->y2, a->z2);
+      b3 = proektcia(0, 0, a->x3, a->y3, a->z3);
+      b4 = proektcia(0, 0, a->x4, a->y4, a->z4);
+      b5 = proektcia(0, 0, a->x5, a->y5, a->z5);
+      b6 = proektcia(0, 0, a->x6, a->y6, a->z6);
+      b7 = proektcia(0, 0, a->x7, a->y7, a->z7);
+      c0 = new_sistem(b0.x, b0.y);
+      c1 = new_sistem(b1.x, b1.y);
+      c2 = new_sistem(b2.x, b2.y);
+      c3 = new_sistem(b3.x, b3.y);
+      c4 = new_sistem(b4.x, b4.y);
+      c5 = new_sistem(b5.x, b5.y);
+      c6 = new_sistem(b6.x, b6.y);
+      c7 = new_sistem(b7.x, b7.y);
+      draw_line(c0.x,c0.y,c5.x , c5.y, 0xff0000);
+      draw_line(c0.x,c0.y,c7.x , c7.y, 0xff0000);
+      draw_line(c0.x,c0.y,c6.x , c6.y, 0xff0000);
+      draw_line(c1.x,c1.y,c2.x , c2.y, 0x8b7500);
+      draw_line(c1.x,c1.y,c3.x , c3.y, 0x8b7500);
+      draw_line(c1.x,c1.y,c4.x , c4.y, 0x8b7500);
+      draw_line(c2.x,c2.y,c5.x , c5.y, 0x8b7500);
+      draw_line(c2.x,c2.y,c6.x , c6.y, 0x8b7500);
+      draw_line(c3.x,c3.y,c5.x , c5.y, 0x8b7500);
+      draw_line(c3.x,c3.y,c7.x , c7.y, 0x8b7500);
+      draw_line(c4.x,c4.y,c6.x , c6.y, 0x8b7500);
+      draw_line(c4.x,c4.y,c7.x , c7.y, 0x8b7500);
+}
+
+
 int clear_and_close(int but, t_piz *param)
 {
+  t_piz save;
   t_matrix b0, b1,b2,b3,b4,b5,b6,b7, c0, c1,c2,c3,c4,c5,c6,c7;
   t_coord rotate0, rotate1,rotate2,rotate3,rotate4,rotate5,rotate6,rotate7;
   t_coord rotate10, rotate11,rotate12,rotate13,rotate14,rotate15,rotate16,rotate17;
+  t_coord rotate20, rotate21,rotate22,rotate23,rotate24,rotate25,rotate26,rotate27;
+  t_coord rotate30, rotate31,rotate32,rotate33,rotate34,rotate35,rotate36,rotate37;
+  t_coord rotate40, rotate41,rotate42,rotate43,rotate44,rotate45,rotate46,rotate47;
+  t_coord rotate50, rotate51,rotate52,rotate53,rotate54,rotate55,rotate56,rotate57;
   if (but == 53)
     exit(EXIT_SUCCESS);
-  if (but == 18)
-    mlx_clear_window(mlx, win1);
   if (but == 126)
   {
       mlx_clear_window(mlx, win1);
-      angle += 0.1;
+      angle += M_PI / 18;
       rotate0 = rotation_x(param->x0, param->y0, param->z0, angle);
       rotate1 = rotation_x(param->x1, param->y1, param->z1, angle);
       rotate2 = rotation_x(param->x2, param->y2, param->z2, angle);
@@ -136,160 +174,87 @@ int clear_and_close(int but, t_piz *param)
       rotate5 = rotation_x(param->x5, param->y5, param->z5, angle);
       rotate6 = rotation_x(param->x6, param->y6, param->z6, angle);
       rotate7 = rotation_x(param->x7, param->y7, param->z7, angle);
-  
-      b0 = proektcia(0, 0, rotate0.x, rotate0.y, rotate0.z);
-      b1 = proektcia(0, 0, rotate1.x, rotate1.y, rotate1.z);
-      b2 = proektcia(0, 0, rotate2.x, rotate2.y, rotate2.z);
-      b3 = proektcia(0, 0, rotate3.x, rotate3.y, rotate3.z);
-      b4 = proektcia(0, 0, rotate4.x, rotate4.y, rotate4.z);
-      b5 = proektcia(0, 0, rotate5.x, rotate5.y, rotate5.z);
-      b6 = proektcia(0, 0, rotate6.x, rotate6.y, rotate6.z);
-      b7 = proektcia(0, 0, rotate7.x, rotate7.y, rotate7.z);
-      c0 = new_sistem(b0.x, b0.y);
-      c1 = new_sistem(b1.x, b1.y);
-      c2 = new_sistem(b2.x, b2.y);
-      c3 = new_sistem(b3.x, b3.y);
-      c4 = new_sistem(b4.x, b4.y);
-      c5 = new_sistem(b5.x, b5.y);
-      c6 = new_sistem(b6.x, b6.y);
-      c7 = new_sistem(b7.x, b7.y);
-      draw_line(c0.x,c0.y,c5.x , c5.y, 0xff0000);
-      draw_line(c0.x,c0.y,c7.x , c7.y, 0xff0000);
-      draw_line(c0.x,c0.y,c6.x , c6.y, 0xff0000);
-      draw_line(c1.x,c1.y,c2.x , c2.y, 0xff0000);
-      draw_line(c1.x,c1.y,c3.x , c3.y, 0xff0000);
-      draw_line(c1.x,c1.y,c4.x , c4.y, 0xff0000);
-      draw_line(c2.x,c2.y,c5.x , c5.y, 0xff0000);
-      draw_line(c2.x,c2.y,c6.x , c6.y, 0xff0000);
-      draw_line(c3.x,c3.y,c5.x , c5.y, 0xff0000);
-      draw_line(c3.x,c3.y,c7.x , c7.y, 0xff0000);
-      draw_line(c4.x,c4.y,c6.x , c6.y, 0xff0000);
-      draw_line(c4.x,c4.y,c7.x , c7.y, 0xff0000);
-  }
 
+      param->x0 = rotate0.x; param->y0 = rotate0.y; param->z0 = rotate0.z;
+      param->x1 = rotate1.x; param->y1 = rotate1.y; param->z1 = rotate1.z;
+      param->x2 = rotate2.x; param->y2 = rotate2.y; param->z2 = rotate2.z;
+      param->x3 = rotate3.x; param->y3 = rotate3.y; param->z3 = rotate3.z;
+      param->x4 = rotate4.x; param->y4 = rotate4.y; param->z4 = rotate4.z;
+      param->x5 = rotate5.x; param->y5 = rotate5.y; param->z5 = rotate5.z;
+      param->x6 = rotate6.x; param->y6 = rotate6.y; param->z6 = rotate6.z;
+      param->x7 = rotate7.x; param->y7 = rotate7.y; param->z7 = rotate7.z;
+
+  }
   if (but == 124)
   {
       mlx_clear_window(mlx, win1);
-      angle += 0.1;
-      rotate10 = rotation_y(param->x0, param->y0, param->z0, angle);
-      rotate11 = rotation_y(param->x1, param->y1, param->z1, angle);
-      rotate12 = rotation_y(param->x2, param->y2, param->z2, angle);
-      rotate13 = rotation_y(param->x3, param->y3, param->z3, angle);
-      rotate14 = rotation_y(param->x4, param->y4, param->z4, angle);
-      rotate15 = rotation_y(param->x5, param->y5, param->z5, angle);
-      rotate16 = rotation_y(param->x6, param->y6, param->z6, angle);
-      rotate17 = rotation_y(param->x7, param->y7, param->z7, angle);
-      b0 = proektcia(0, 0, rotate10.x, rotate10.y, rotate10.z);
-      b1 = proektcia(0, 0, rotate11.x, rotate11.y, rotate11.z);
-      b2 = proektcia(0, 0, rotate12.x, rotate12.y, rotate12.z);
-      b3 = proektcia(0, 0, rotate13.x, rotate13.y, rotate13.z);
-      b4 = proektcia(0, 0, rotate14.x, rotate14.y, rotate14.z);
-      b5 = proektcia(0, 0, rotate15.x, rotate15.y, rotate15.z);
-      b6 = proektcia(0, 0, rotate16.x, rotate16.y, rotate16.z);
-      b7 = proektcia(0, 0, rotate17.x, rotate17.y, rotate17.z);
-      c0 = new_sistem(b0.x, b0.y);
-      c1 = new_sistem(b1.x, b1.y);
-      c2 = new_sistem(b2.x, b2.y);
-      c3 = new_sistem(b3.x, b3.y);
-      c4 = new_sistem(b4.x, b4.y);
-      c5 = new_sistem(b5.x, b5.y);
-      c6 = new_sistem(b6.x, b6.y);
-      c7 = new_sistem(b7.x, b7.y);
-      draw_line(c0.x,c0.y,c5.x , c5.y, 0xff0000);
-      draw_line(c0.x,c0.y,c7.x , c7.y, 0xff0000);
-      draw_line(c0.x,c0.y,c6.x , c6.y, 0xff0000);
-      draw_line(c1.x,c1.y,c2.x , c2.y, 0xff0000);
-      draw_line(c1.x,c1.y,c3.x , c3.y, 0xff0000);
-      draw_line(c1.x,c1.y,c4.x , c4.y, 0xff0000);
-      draw_line(c2.x,c2.y,c5.x , c5.y, 0xff0000);
-      draw_line(c2.x,c2.y,c6.x , c6.y, 0xff0000);
-      draw_line(c3.x,c3.y,c5.x , c5.y, 0xff0000);
-      draw_line(c3.x,c3.y,c7.x , c7.y, 0xff0000);
-      draw_line(c4.x,c4.y,c6.x , c6.y, 0xff0000);
-      draw_line(c4.x,c4.y,c7.x , c7.y, 0xff0000);
+      angle += M_PI / 18;
+      rotate0 = rotation_y(param->x0, param->y0, param->z0, angle);
+      rotate1 = rotation_y(param->x1, param->y1, param->z1, angle);
+      rotate2 = rotation_y(param->x2, param->y2, param->z2, angle);
+      rotate3 = rotation_y(param->x3, param->y3, param->z3, angle);
+      rotate4 = rotation_y(param->x4, param->y4, param->z4, angle);
+      rotate5 = rotation_y(param->x5, param->y5, param->z5, angle);
+      rotate6 = rotation_y(param->x6, param->y6, param->z6, angle);
+      rotate7 = rotation_y(param->x7, param->y7, param->z7, angle);
+
+      param->x0 = rotate0.x; param->y0 = rotate0.y; param->z0 = rotate0.z;
+      param->x1 = rotate1.x; param->y1 = rotate1.y; param->z1 = rotate1.z;
+      param->x2 = rotate2.x; param->y2 = rotate2.y; param->z2 = rotate2.z;
+      param->x3 = rotate3.x; param->y3 = rotate3.y; param->z3 = rotate3.z;
+      param->x4 = rotate4.x; param->y4 = rotate4.y; param->z4 = rotate4.z;
+      param->x5 = rotate5.x; param->y5 = rotate5.y; param->z5 = rotate5.z;
+      param->x6 = rotate6.x; param->y6 = rotate6.y; param->z6 = rotate6.z;
+      param->x7 = rotate7.x; param->y7 = rotate7.y; param->z7 = rotate7.z;
+
   }
   if (but == 125)
   {
       mlx_clear_window(mlx, win1);
-      angle -= 0.1;
-      rotate10 = rotation_x(param->x0, param->y0, param->z0, angle);
-      rotate11 = rotation_x(param->x1, param->y1, param->z1, angle);
-      rotate12 = rotation_x(param->x2, param->y2, param->z2, angle);
-      rotate13 = rotation_x(param->x3, param->y3, param->z3, angle);
-      rotate14 = rotation_x(param->x4, param->y4, param->z4, angle);
-      rotate15 = rotation_x(param->x5, param->y5, param->z5, angle);
-      rotate16 = rotation_x(param->x6, param->y6, param->z6, angle);
-      rotate17 = rotation_x(param->x7, param->y7, param->z7, angle);
-      b0 = proektcia(0, 0, rotate10.x, rotate10.y, rotate10.z);
-      b1 = proektcia(0, 0, rotate11.x, rotate11.y, rotate11.z);
-      b2 = proektcia(0, 0, rotate12.x, rotate12.y, rotate12.z);
-      b3 = proektcia(0, 0, rotate13.x, rotate13.y, rotate13.z);
-      b4 = proektcia(0, 0, rotate14.x, rotate14.y, rotate14.z);
-      b5 = proektcia(0, 0, rotate15.x, rotate15.y, rotate15.z);
-      b6 = proektcia(0, 0, rotate16.x, rotate16.y, rotate16.z);
-      b7 = proektcia(0, 0, rotate17.x, rotate17.y, rotate17.z);
-      c0 = new_sistem(b0.x, b0.y);
-      c1 = new_sistem(b1.x, b1.y);
-      c2 = new_sistem(b2.x, b2.y);
-      c3 = new_sistem(b3.x, b3.y);
-      c4 = new_sistem(b4.x, b4.y);
-      c5 = new_sistem(b5.x, b5.y);
-      c6 = new_sistem(b6.x, b6.y);
-      c7 = new_sistem(b7.x, b7.y);
-      draw_line(c0.x,c0.y,c5.x , c5.y, 0xff0000);
-      draw_line(c0.x,c0.y,c7.x , c7.y, 0xff0000);
-      draw_line(c0.x,c0.y,c6.x , c6.y, 0xff0000);
-      draw_line(c1.x,c1.y,c2.x , c2.y, 0xff0000);
-      draw_line(c1.x,c1.y,c3.x , c3.y, 0xff0000);
-      draw_line(c1.x,c1.y,c4.x , c4.y, 0xff0000);
-      draw_line(c2.x,c2.y,c5.x , c5.y, 0xff0000);
-      draw_line(c2.x,c2.y,c6.x , c6.y, 0xff0000);
-      draw_line(c3.x,c3.y,c5.x , c5.y, 0xff0000);
-      draw_line(c3.x,c3.y,c7.x , c7.y, 0xff0000);
-      draw_line(c4.x,c4.y,c6.x , c6.y, 0xff0000);
-      draw_line(c4.x,c4.y,c7.x , c7.y, 0xff0000);
+      angle -= M_PI / 18;
+      rotate0 = rotation_x(param->x0, param->y0, param->z0, angle);
+      rotate1 = rotation_x(param->x1, param->y1, param->z1, angle);
+      rotate2 = rotation_x(param->x2, param->y2, param->z2, angle);
+      rotate3 = rotation_x(param->x3, param->y3, param->z3, angle);
+      rotate4 = rotation_x(param->x4, param->y4, param->z4, angle);
+      rotate5 = rotation_x(param->x5, param->y5, param->z5, angle);
+      rotate6 = rotation_x(param->x6, param->y6, param->z6, angle);
+      rotate7 = rotation_x(param->x7, param->y7, param->z7, angle);
+
+      param->x0 = rotate0.x; param->y0 = rotate0.y; param->z0 = rotate0.z;
+      param->x1 = rotate1.x; param->y1 = rotate1.y; param->z1 = rotate1.z;
+      param->x2 = rotate2.x; param->y2 = rotate2.y; param->z2 = rotate2.z;
+      param->x3 = rotate3.x; param->y3 = rotate3.y; param->z3 = rotate3.z;
+      param->x4 = rotate4.x; param->y4 = rotate4.y; param->z4 = rotate4.z;
+      param->x5 = rotate5.x; param->y5 = rotate5.y; param->z5 = rotate5.z;
+      param->x6 = rotate6.x; param->y6 = rotate6.y; param->z6 = rotate6.z;
+      param->x7 = rotate7.x; param->y7 = rotate7.y; param->z7 = rotate7.z;
+
   }
   if (but == 123)
   {
       mlx_clear_window(mlx, win1);
-      angle -= 0.1;
-      rotate10 = rotation_y(param->x0, param->y0, param->z0, angle);
-      rotate11 = rotation_y(param->x1, param->y1, param->z1, angle);
-      rotate12 = rotation_y(param->x2, param->y2, param->z2, angle);
-      rotate13 = rotation_y(param->x3, param->y3, param->z3, angle);
-      rotate14 = rotation_y(param->x4, param->y4, param->z4, angle);
-      rotate15 = rotation_y(param->x5, param->y5, param->z5, angle);
-      rotate16 = rotation_y(param->x6, param->y6, param->z6, angle);
-      rotate17 = rotation_y(param->x7, param->y7, param->z7, angle);
-      b0 = proektcia(0, 0, rotate10.x, rotate10.y, rotate10.z);
-      b1 = proektcia(0, 0, rotate11.x, rotate11.y, rotate11.z);
-      b2 = proektcia(0, 0, rotate12.x, rotate12.y, rotate12.z);
-      b3 = proektcia(0, 0, rotate13.x, rotate13.y, rotate13.z);
-      b4 = proektcia(0, 0, rotate14.x, rotate14.y, rotate14.z);
-      b5 = proektcia(0, 0, rotate15.x, rotate15.y, rotate15.z);
-      b6 = proektcia(0, 0, rotate16.x, rotate16.y, rotate16.z);
-      b7 = proektcia(0, 0, rotate17.x, rotate17.y, rotate17.z);
-      c0 = new_sistem(b0.x, b0.y);
-      c1 = new_sistem(b1.x, b1.y);
-      c2 = new_sistem(b2.x, b2.y);
-      c3 = new_sistem(b3.x, b3.y);
-      c4 = new_sistem(b4.x, b4.y);
-      c5 = new_sistem(b5.x, b5.y);
-      c6 = new_sistem(b6.x, b6.y);
-      c7 = new_sistem(b7.x, b7.y);
-      draw_line(c0.x,c0.y,c5.x , c5.y, 0xff0000);
-      draw_line(c0.x,c0.y,c7.x , c7.y, 0xff0000);
-      draw_line(c0.x,c0.y,c6.x , c6.y, 0xff0000);
-      draw_line(c1.x,c1.y,c2.x , c2.y, 0xff0000);
-      draw_line(c1.x,c1.y,c3.x , c3.y, 0xff0000);
-      draw_line(c1.x,c1.y,c4.x , c4.y, 0xff0000);
-      draw_line(c2.x,c2.y,c5.x , c5.y, 0xff0000);
-      draw_line(c2.x,c2.y,c6.x , c6.y, 0xff0000);
-      draw_line(c3.x,c3.y,c5.x , c5.y, 0xff0000);
-      draw_line(c3.x,c3.y,c7.x , c7.y, 0xff0000);
-      draw_line(c4.x,c4.y,c6.x , c6.y, 0xff0000);
-      draw_line(c4.x,c4.y,c7.x , c7.y, 0xff0000);
+      angle -= M_PI / 18;
+      rotate0 = rotation_y(param->x0, param->y0, param->z0, angle);
+      rotate1 = rotation_y(param->x1, param->y1, param->z1, angle);
+      rotate2 = rotation_y(param->x2, param->y2, param->z2, angle);
+      rotate3 = rotation_y(param->x3, param->y3, param->z3, angle);
+      rotate4 = rotation_y(param->x4, param->y4, param->z4, angle);
+      rotate5 = rotation_y(param->x5, param->y5, param->z5, angle);
+      rotate6 = rotation_y(param->x6, param->y6, param->z6, angle);
+      rotate7 = rotation_y(param->x7, param->y7, param->z7, angle);
+      
+      param->x0 = rotate0.x; param->y0 = rotate0.y; param->z0 = rotate0.z;
+      param->x1 = rotate1.x; param->y1 = rotate1.y; param->z1 = rotate1.z;
+      param->x2 = rotate2.x; param->y2 = rotate2.y; param->z2 = rotate2.z;
+      param->x3 = rotate3.x; param->y3 = rotate3.y; param->z3 = rotate3.z;
+      param->x4 = rotate4.x; param->y4 = rotate4.y; param->z4 = rotate4.z;
+      param->x5 = rotate5.x; param->y5 = rotate5.y; param->z5 = rotate5.z;
+      param->x6 = rotate6.x; param->y6 = rotate6.y; param->z6 = rotate6.z;
+      param->x7 = rotate7.x; param->y7 = rotate7.y; param->z7 = rotate7.z;
+
   }
+  redraw(param);
   return (0);
 }
 
@@ -363,15 +328,15 @@ int main()
     draw_line(c0.x,c0.y,c5.x , c5.y, 0xff0000);
     draw_line(c0.x,c0.y,c7.x , c7.y, 0xff0000);
     draw_line(c0.x,c0.y,c6.x , c6.y, 0xff0000);
-    draw_line(c1.x,c1.y,c2.x , c2.y, 0xff0000);
-    draw_line(c1.x,c1.y,c3.x , c3.y, 0xff0000);
-    draw_line(c1.x,c1.y,c4.x , c4.y, 0xff0000);
-    draw_line(c2.x,c2.y,c5.x , c5.y, 0xff0000);
-    draw_line(c2.x,c2.y,c6.x , c6.y, 0xff0000);
-    draw_line(c3.x,c3.y,c5.x , c5.y, 0xff0000);
-    draw_line(c3.x,c3.y,c7.x , c7.y, 0xff0000);
-    draw_line(c4.x,c4.y,c6.x , c6.y, 0xff0000);
-    draw_line(c4.x,c4.y,c7.x , c7.y, 0xff0000);
+    draw_line(c1.x,c1.y,c2.x , c2.y, 0x8b7500);
+    draw_line(c1.x,c1.y,c3.x , c3.y, 0x8b7500);
+    draw_line(c1.x,c1.y,c4.x , c4.y, 0x8b7500);
+    draw_line(c2.x,c2.y,c5.x , c5.y, 0x8b7500);
+    draw_line(c2.x,c2.y,c6.x , c6.y, 0x8b7500);
+    draw_line(c3.x,c3.y,c5.x , c5.y, 0x8b7500);
+    draw_line(c3.x,c3.y,c7.x , c7.y, 0x8b7500);
+    draw_line(c4.x,c4.y,c6.x , c6.y, 0x8b7500);
+    draw_line(c4.x,c4.y,c7.x , c7.y, 0x8b7500);
 
     mlx_hook(win1,2 , 0,clear_and_close, &p);
     mlx_mouse_hook(win1, mouse, 0);
