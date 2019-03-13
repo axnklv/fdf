@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:57:31 by elchrist          #+#    #+#             */
-/*   Updated: 2019/03/12 19:30:46 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/03/13 19:06:23 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,22 @@ void	usage(void)
 	exit(0);
 }
 
-int		ft_count_words(char *s, char sep)
-{
-	int	i;
-	int	quantity;
-
-	quantity = 0;
-	i = 0;
-	while (s[i] && s[i] == sep)
-		i++;
-	while (s[i])
-	{
-		while (s[i] && s[i] != sep)
-			i++;
-		quantity++;
-		while (s[i] && s[i] == sep)
-			i++;
-	}
-	return (quantity);
-}
+// int		ft_count_words(char *s, char sep)
+// {
+// 	int	i;
+// 	int	quantity;
+//
+// 	quantity = 0;
+// 	i = 0;
+// 	while (s[i] && s[i] == sep)
+// 		i++;
+// 	while (s[i])
+// 	{
+// 		while (s[i] && s[i] != sep)
+// 			i++;
+// 		quantity++;
+// 		while (s[i] && s[i] == sep)
+// 			i++;
+// 	}
+// 	return (quantity);
+// }
