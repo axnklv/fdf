@@ -6,7 +6,7 @@
 /*   By: hkuhic <hkuhic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 19:33:31 by elchrist          #+#    #+#             */
-/*   Updated: 2019/03/13 21:23:04 by hkuhic           ###   ########.fr       */
+/*   Updated: 2019/03/14 19:44:17 by hkuhic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,26 @@ t_point rotation_y(float x, float y, float z, float angle)
   return (a);
 }
 
-t_point new_sistem(float axisx, float axisy)
+t_point new_sistem(t_point a)
 {
-  t_point a;
-  a.x = (int)((axisx + 1) * (float)(1000 / 2));
-  a.y = (int)((-axisy + 1) * (float)(1000 / 2));
+  a.x = (int)((a.x + 1) * (float)(1000 / 2));
+  a.y = (int)((-a.y + 1) * (float)(1000 / 2));
   return (a);
 }
-t_point mashtab(float x, float y)
+t_point mashtab_up(float x, float y, float z)
 {
   t_point a;
-  a.x = x * 100;
-  a.y = y * 100;
+  a.x = x * 2;
+  a.y = y * 2;
+  a.z = z * 1;
+  return (a);
+}
+t_point mashtab_down(float x, float y, float z)
+{
+  t_point a;
+  a.x = x * 1/2;
+  a.y = y * 1/2;
+  a.z = z * 1;
   return (a);
 }
 
@@ -127,14 +135,14 @@ void redraw(t_piz *a)
       b5 = proektcia(0, 0, a->x5, a->y5, a->z5);
       b6 = proektcia(0, 0, a->x6, a->y6, a->z6);
       b7 = proektcia(0, 0, a->x7, a->y7, a->z7);
-      c0 = new_sistem(b0.x, b0.y);
-      c1 = new_sistem(b1.x, b1.y);
-      c2 = new_sistem(b2.x, b2.y);
-      c3 = new_sistem(b3.x, b3.y);
-      c4 = new_sistem(b4.x, b4.y);
-      c5 = new_sistem(b5.x, b5.y);
-      c6 = new_sistem(b6.x, b6.y);
-      c7 = new_sistem(b7.x, b7.y);
+      c0 = new_sistem(b0);
+      c1 = new_sistem(b1);
+      c2 = new_sistem(b2);
+      c3 = new_sistem(b3);
+      c4 = new_sistem(b4);
+      c5 = new_sistem(b5);
+      c6 = new_sistem(b6);
+      c7 = new_sistem(b7);
       draw_line(c0.x,c0.y,c5.x , c5.y, 0xff0000);
       draw_line(c0.x,c0.y,c7.x , c7.y, 0xff0000);
       draw_line(c0.x,c0.y,c6.x , c6.y, 0xff0000);
@@ -152,7 +160,7 @@ void redraw(t_piz *a)
 int  iso(int but, t_piz *param)
 {
     mlx_clear_window(mlx, win1);
-    if(but == 18)
+    if(but == 19)
     {
       param->x0 = (param->x0 + param->y0) * cos(M_PI / 6);
       param->x0 = -(param->z0) + (param->x0 - param->y0) * sin(M_PI /6);
@@ -175,16 +183,19 @@ int  iso(int but, t_piz *param)
     return (0);
 }
 
+
 int clear_and_close(int but, t_piz *param)
 {
   t_point b0, b1,b2,b3,b4,b5,b6,b7, c0, c1,c2,c3,c4,c5,c6,c7;
   t_point rotate0, rotate1,rotate2,rotate3,rotate4,rotate5,rotate6,rotate7;
-  t_point rotate10, rotate11,rotate12,rotate13,rotate14,rotate15,rotate16,rotate17;
-  t_point rotate20, rotate21,rotate22,rotate23,rotate24,rotate25,rotate26,rotate27;
-  t_point rotate30, rotate31,rotate32,rotate33,rotate34,rotate35,rotate36,rotate37;
-  t_point rotate40, rotate41,rotate42,rotate43,rotate44,rotate45,rotate46,rotate47;
-  t_point rotate50, rotate51,rotate52,rotate53,rotate54,rotate55,rotate56,rotate57;
-  if (but == 53)
+  
+  
+  if (but == 18)
+  {
+    mlx_clear_window(mlx, win1);
+    return (0);
+  }
+  else if (but == 53)
     exit(EXIT_SUCCESS);
   else if (but == 126)
   {
@@ -282,10 +293,59 @@ int clear_and_close(int but, t_piz *param)
   return (0);
 }
 
-int   mouse(int button, int x, int y, int x1, int y1)
+int   mouse(int but, int x, int y, t_piz *param)
 {
-    if (button == 1)
+    t_point scale0, scale1,scale2,scale3,scale4,scale5,scale6,scale7;
+    t_point b0, b1,b2,b3,b4,b5,b6,b7, c0, c1,c2,c3,c4,c5,c6,c7;
+    if (but == 1)
         mlx_string_put(mlx, win1, x, y, 0xfffafa, "P I Z D A");
+    else if (but == 5)
+    {
+      mlx_clear_window(mlx, win1);
+            
+      scale0 = mashtab_down(param->x0, param->y0, param->z0);
+      scale1 = mashtab_down(param->x1, param->y1, param->z1);
+      scale2 = mashtab_down(param->x2, param->y2, param->z2);
+      scale3 = mashtab_down(param->x3, param->y3, param->z3);
+      scale4 = mashtab_down(param->x4, param->y4, param->z4);
+      scale5 = mashtab_down(param->x5, param->y5, param->z5);
+      scale6 = mashtab_down(param->x6, param->y6, param->z6);
+      scale7 = mashtab_down(param->x7, param->y7, param->z7);
+
+      param->x0 = scale0.x; param->y0 = scale0.y; param->z0 = scale0.z;
+      param->x1 = scale1.x; param->y1 = scale1.y; param->z1 = scale1.z;
+      param->x2 = scale2.x; param->y2 = scale2.y; param->z2 = scale2.z;
+      param->x3 = scale3.x; param->y3 = scale3.y; param->z3 = scale3.z;
+      param->x4 = scale4.x; param->y4 = scale4.y; param->z4 = scale4.z;
+      param->x5 = scale5.x; param->y5 = scale5.y; param->z5 = scale5.z;
+      param->x6 = scale6.x; param->y6 = scale6.y; param->z6 = scale6.z;
+      param->x7 = scale7.x; param->y7 = scale7.y; param->z7 = scale7.z;
+
+    }
+    else if (but == 4)
+    {
+      mlx_clear_window(mlx, win1);
+            
+      scale0 = mashtab_up(param->x0, param->y0, param->z0);
+      scale1 = mashtab_up(param->x1, param->y1, param->z1);
+      scale2 = mashtab_up(param->x2, param->y2, param->z2);
+      scale3 = mashtab_up(param->x3, param->y3, param->z3);
+      scale4 = mashtab_up(param->x4, param->y4, param->z4);
+      scale5 = mashtab_up(param->x5, param->y5, param->z5);
+      scale6 = mashtab_up(param->x6, param->y6, param->z6);
+      scale7 = mashtab_up(param->x7, param->y7, param->z7);
+
+      param->x0 = scale0.x; param->y0 = scale0.y; param->z0 = scale0.z;
+      param->x1 = scale1.x; param->y1 = scale1.y; param->z1 = scale1.z;
+      param->x2 = scale2.x; param->y2 = scale2.y; param->z2 = scale2.z;
+      param->x3 = scale3.x; param->y3 = scale3.y; param->z3 = scale3.z;
+      param->x4 = scale4.x; param->y4 = scale4.y; param->z4 = scale4.z;
+      param->x5 = scale5.x; param->y5 = scale5.y; param->z5 = scale5.z;
+      param->x6 = scale6.x; param->y6 = scale6.y; param->z6 = scale6.z;
+      param->x7 = scale7.x; param->y7 = scale7.y; param->z7 = scale7.z;
+
+    }
+    redraw(param);
     return (0);
 }
 
@@ -315,9 +375,10 @@ int main()
     p.x6 = a.x6;p.y6 = a.y6;p.z6 = a.z6;
     p.x7 = a.x7;p.y7 = a.y7;p.z7 = a.z7;
     redraw(&a);   
-    mlx_hook(win1,2 , 0,clear_and_close, &p);
-    mlx_mouse_hook(win1, mouse, 0);
-    mlx_key_hook(win1, iso, &p);
+    mlx_hook(win1,2 , 0, clear_and_close, &p);
+   
+    mlx_mouse_hook(win1, mouse, &p);
+   
     mlx_loop(mlx);
     return (0);
 }
