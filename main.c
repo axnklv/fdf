@@ -6,7 +6,7 @@
 /*   By: hkuhic <hkuhic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 19:33:31 by elchrist          #+#    #+#             */
-/*   Updated: 2019/03/14 20:04:28 by hkuhic           ###   ########.fr       */
+/*   Updated: 2019/03/14 20:23:00 by hkuhic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ t_point move_up(float x, float y, float z)
 {
   t_point a;
   a.x = x;
-  a.y = y + 0.5;
+  a.y = y + 0.1;
   a.z = z;
   return (a);
 }
@@ -135,7 +135,7 @@ t_point move_up(float x, float y, float z)
 t_point move_right(float x, float y, float z)
 {
   t_point a;
-  a.x = x + 0.5;
+  a.x = x + 0.1;
   a.y = y;
   a.z = z;
   return (a);
@@ -145,7 +145,7 @@ t_point move_down(float x, float y, float z)
 {
   t_point a;
   a.x = x;
-  a.y = y - 0.5;
+  a.y = y - 0.1;
   a.z = z;
   return (a);
 }
@@ -153,11 +153,28 @@ t_point move_down(float x, float y, float z)
 t_point move_left(float x, float y, float z)
 {
   t_point a;
-  a.x = x - 0.5;
+  a.x = x - 0.1;
   a.y = y;
   a.z = z;
   return (a);
 }
+t_point move_z_up(float x, float y, float z)
+{
+  t_point a;
+  a.x = x;
+  a.y = y;
+  a.z = z * 1.1;
+  return (a);
+}
+t_point move_z_down(float x, float y, float z)
+{
+  t_point a;
+  a.x = x;
+  a.y = y;
+  a.z = z * 0.9;
+  return (a);
+}
+
 
 void redraw(t_piz *a)
 {
@@ -233,6 +250,50 @@ int clear_and_close(int but, t_piz *param)
   }
   else if (but == 53)
     exit(EXIT_SUCCESS);
+  else if (but == 6)
+  {
+      mlx_clear_window(mlx, win1);
+      move0 = move_z_up(param->x0, param->y0, param->z0);
+      move1 = move_z_up(param->x1, param->y1, param->z1);
+      move2 = move_z_up(param->x2, param->y2, param->z2);
+      move3 = move_z_up(param->x3, param->y3, param->z3);
+      move4 = move_z_up(param->x4, param->y4, param->z4);
+      move5 = move_z_up(param->x5, param->y5, param->z5);
+      move6 = move_z_up(param->x6, param->y6, param->z6);
+      move7 = move_z_up(param->x7, param->y7, param->z7);
+
+      param->x0 = move0.x; param->y0 = move0.y; param->z0 = move0.z;
+      param->x1 = move1.x; param->y1 = move1.y; param->z1 = move1.z;
+      param->x2 = move2.x; param->y2 = move2.y; param->z2 = move2.z;
+      param->x3 = move3.x; param->y3 = move3.y; param->z3 = move3.z;
+      param->x4 = move4.x; param->y4 = move4.y; param->z4 = move4.z;
+      param->x5 = move5.x; param->y5 = move5.y; param->z5 = move5.z;
+      param->x6 = move6.x; param->y6 = move6.y; param->z6 = move6.z;
+      param->x7 = move7.x; param->y7 = move7.y; param->z7 = move7.z;
+
+  }
+  else if (but == 7)
+  {
+      mlx_clear_window(mlx, win1);
+      move0 = move_z_down(param->x0, param->y0, param->z0);
+      move1 = move_z_down(param->x1, param->y1, param->z1);
+      move2 = move_z_down(param->x2, param->y2, param->z2);
+      move3 = move_z_down(param->x3, param->y3, param->z3);
+      move4 = move_z_down(param->x4, param->y4, param->z4);
+      move5 = move_z_down(param->x5, param->y5, param->z5);
+      move6 = move_z_down(param->x6, param->y6, param->z6);
+      move7 = move_z_down(param->x7, param->y7, param->z7);
+
+      param->x0 = move0.x; param->y0 = move0.y; param->z0 = move0.z;
+      param->x1 = move1.x; param->y1 = move1.y; param->z1 = move1.z;
+      param->x2 = move2.x; param->y2 = move2.y; param->z2 = move2.z;
+      param->x3 = move3.x; param->y3 = move3.y; param->z3 = move3.z;
+      param->x4 = move4.x; param->y4 = move4.y; param->z4 = move4.z;
+      param->x5 = move5.x; param->y5 = move5.y; param->z5 = move5.z;
+      param->x6 = move6.x; param->y6 = move6.y; param->z6 = move6.z;
+      param->x7 = move7.x; param->y7 = move7.y; param->z7 = move7.z;
+
+  }
   else if (but == 13)
   {
       mlx_clear_window(mlx, win1);
@@ -422,7 +483,7 @@ int   mouse(int but, int x, int y, t_piz *param)
     t_point scale0, scale1,scale2,scale3,scale4,scale5,scale6,scale7;
     t_point b0, b1,b2,b3,b4,b5,b6,b7, c0, c1,c2,c3,c4,c5,c6,c7;
     if (but == 1)
-        mlx_string_put(mlx, win1, x, y, 0xfffafa, "P I Z D A");
+        mlx_string_put(mlx, win1, x, y, 0xfffafa, "SASHA HUI");
     else if (but == 5)
     {
       mlx_clear_window(mlx, win1);
@@ -480,7 +541,7 @@ int main()
     
 
     mlx = mlx_init();
-    win1 = mlx_new_window(mlx, 1000, 1000, "win1");
+    win1 = mlx_new_window(mlx, 1000, 1000, "u sashi malenkiy");
     a.x0 = -0.5; a.y0 = -0.5; a.z0 = -0.5;
     a.x1 = 0.5; a.y1 = 0.5; a.z1 = 0.5;
     a.x2 = -0.5; a.y2 = 0.5; a.z2 = 0.5;
