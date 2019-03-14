@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:58:20 by elchrist          #+#    #+#             */
-/*   Updated: 2019/03/13 19:53:45 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/03/14 21:43:23 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ typedef struct	s_point
 	float				x;
 	float				y;
 	float				z;
-	int				color; //надо hex  в int
+	int				color; //надо hex  в dec
 	float			x_pro;
 	float			y_pro;
-	struct s_pixel	*next;
+	char			*file;
+	t_point			**point;
+	int				height;
+	int				width;
+	//struct s_pixel	*next;
 }				t_point;
 
 
@@ -49,7 +53,17 @@ t_point	rotation_x(float x, float y, float z, float angle);
 t_point rotation_y(float x, float y, float z, float angle);
 t_point rotation_z(float x, float y, float z, float angle);
 int		check_width(char **split_line);
-int		reading(int fd);
+void	validation(t_point *elem);
+void	reading(t_point *elem);
+void	map_error(int error);
 int		letter_to_int(char hex);
+void	tab(t_point *point, char *s);
+void	tab_z(t_point *e, char *line, int i);
+
+// typedef struct		s_list
+// {
+// 	void			*content;
+// 	struct s_list	*next;
+// }					t_list;
 
 #endif
